@@ -5,16 +5,45 @@
 //  Created by swostik gautam on 24/12/2022.
 //
 
-import UIKit
+import SwiftUI
 
-class WeatherBody: UITextField {
+struct WeatherBody : View {
+    //@ObservedObject var weatherViewModel = WeatherViewModel()
+    @StateObject var weatherViewModel = WeatherViewModel()
+    var body : some View {
+        if(weatherViewModel.loadingCurrentWeather) {
+            ZStack {
+                Color.white.ignoresSafeArea(.all)
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+            }
+        }else {
+            ScrollView {
+                VStack {
+                    CurrentWeatherInfo(
+                        currentTemp: String(format: "%.0f", weatherViewModel.weatherData.current?.temp_c ?? 0.0),
+                        currentLocation: weatherViewModel.weatherData.location?.name ?? "",
+                        currentTime: getCurrentDateTime(date: weatherViewModel.weatherData.location?.localtime ?? "")
+                    )
+                    
+                    AstroCardView(
+                        sunRiseTime: weatherViewModel.astronomyData.astronomy?.astro?.sunrise ?? "",
+                        sunSetTime: weatherViewModel.astronomyData.astronomy?.astro?.sunset ?? "",
+                        loadingAstrology: weatherViewModel.loadingAstrology
+                    )
+                    
+                    WindAndHumidityInfo(
+                        windInfo: "\(weatherViewModel.weatherData.current?.wind_kph ?? 0.0)",
+                        humidityInfo: "\(weatherViewModel.weatherData.current?.humidity ?? 0)",
+                        pressure: "\(weatherViewModel.weatherData.current?.pressure_mb ?? 0.0)"
+                    )
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+                    ForecastData(hourData: weatherViewModel.foreCastData.forecast?.forecastday?.first?.hour ?? [])
+                    
+                   
+                }.padding(.horizontal , 20)
+            }
+        }
+        
     }
-    */
-
 }

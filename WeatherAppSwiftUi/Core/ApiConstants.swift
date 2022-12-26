@@ -13,6 +13,11 @@ class ApiConstants {
 }
 
 class ApiKeys {
-    static var key : String = "key"
-    static var loation: String = "q"
+    static var key: String = "key"
+    static var location: String = "q"
+    static var dateTime: String = "dt"
+    static var days: String = "days"
+    static var alerts: String = "alerts"
+    static var aqi: String = "aqi"
 }
+
