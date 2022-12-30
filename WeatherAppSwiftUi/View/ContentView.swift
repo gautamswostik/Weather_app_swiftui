@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body : some View {
-        NavigationView {
+        NavigationView() {
             ZStack {
-                Color.teal.ignoresSafeArea(.all)
+                Color.pink.ignoresSafeArea(.all)
                 WeatherBody()
             }
             .navigationTitle(getGretting())

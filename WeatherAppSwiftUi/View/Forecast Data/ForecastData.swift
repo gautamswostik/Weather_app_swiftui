@@ -26,6 +26,11 @@ struct ForeCastDataCard: View {
                         .aspectRatio( contentMode: .fit)
                         .foregroundColor(.white)
                     Spacer()
+                    Spacer()
+                    Image(systemName: "thermometer.sun")
+                        .aspectRatio( contentMode: .fit)
+                        .foregroundColor(.white)
+                    Spacer()
                     Image(systemName: "wind")
                         .aspectRatio( contentMode: .fit)
                         .foregroundColor(.white)
@@ -33,30 +38,28 @@ struct ForeCastDataCard: View {
                     Image(systemName: "humidity")
                         .aspectRatio( contentMode: .fit)
                         .foregroundColor(.white)
-                    Spacer()
-                    Image(systemName: "thermometer.sun")
-                        .aspectRatio( contentMode: .fit)
-                        .foregroundColor(.white)
                 }.padding(.horizontal , 20)
                     .padding(.vertical , 20)
                 
-                    ForEach(hourData , id: \.time_epoch) { hour in
-                        HStack{
-                            Text(getCurrentDateInTimeFormat(date: hour.time ?? ""))
-                                .foregroundColor(.white)
-                            Spacer()
-                            Text(String(format: "%.00f", hour.wind_kph ?? 0.0) + " " + "km/s")
-                                .foregroundColor(.white)
-                            Spacer()
-                            Text("\(hour.humidity ?? 0 ) %")
-                                .foregroundColor(.white)
-                            Spacer()
-                            Text(String(format: "%.00f", hour.pressure_mb ?? 0.0) + " " + "mb")
-                                .foregroundColor(.white)
-                            
-                        }.padding(.horizontal , 10)
-                            .padding(.vertical , 5)
-                    }
+                ForEach(hourData , id: \.time_epoch) { hour in
+                    HStack{
+                        Text(getCurrentDateInTimeFormat(date: hour.time ?? ""))
+                            .foregroundColor(.white)
+                        Spacer()
+                        Spacer()
+                        Text(String(format: "%.00f", hour.temp_c ?? 0.0) + "°c")
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        Text(String(format: "%.00f", hour.wind_kph ?? 0.0) + " " + "km/s")
+                            .foregroundColor(.white)
+                        Spacer()
+                        Text("\(hour.humidity ?? 0 ) %")
+                            .foregroundColor(.white)
+                        
+                    }.padding(.horizontal , 10)
+                        .padding(.vertical , 5)
+                }
             }.padding(.bottom , 20)
         }
     }

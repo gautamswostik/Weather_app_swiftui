@@ -19,13 +19,33 @@ class WeatherViewModel : ObservableObject {
     @Published var loadingCurrentWeather: Bool = false
     @Published var loadingAstrology: Bool = false
     @Published var loadingForecast: Bool = false
+    @Published var latitude: String = String()
+    @Published var longitude: String = String()
+    
     private let validateUserInput = UserInputValidation()
     private let weatherService = WeatherApiManager()
+    private let locationService = CurrentUserLocation()
     
     init() {
+        getCurrentLocation()
         fetchWeatherData(location: "kathmandu")
         fetchAstronomyData(location: "kathmandu")
         fetchForcastData(location: "kathmandu")
+    }
+    
+    func getCurrentLocation() {
+        locationService.requestLocationPermission {location in
+            switch (location) {
+            case .success(let locationData):
+                DispatchQueue.main.async {
+                    self.latitude = "\(locationData.coordinate.latitude)"
+                    self.longitude = "\(locationData.coordinate.longitude)"
+                    
+                }
+            case .failure(let error):
+                print("Error getting location: \(error)")
+            }
+        }
     }
     
     @discardableResult
@@ -61,6 +81,7 @@ class WeatherViewModel : ObservableObject {
         }
         
     }
+    
     
     func fetchAstronomyData(location: String) {
         self.loadingAstrology = true

@@ -20,6 +20,8 @@ struct WeatherBody : View {
         }else {
             ScrollView {
                 VStack {
+                    //ADD SEARCH FIELD
+//                    TextField
                     CurrentWeatherInfo(
                         currentTemp: String(format: "%.0f", weatherViewModel.weatherData.current?.temp_c ?? 0.0),
                         currentLocation: weatherViewModel.weatherData.location?.name ?? "",
@@ -37,10 +39,10 @@ struct WeatherBody : View {
                         humidityInfo: "\(weatherViewModel.weatherData.current?.humidity ?? 0)",
                         pressure: "\(weatherViewModel.weatherData.current?.pressure_mb ?? 0.0)"
                     )
-
+                    
+                    // ADD SEE MORE FUNCTIONALITY (SHOW ONLY 5 at first and show all at expand)
                     ForecastData(hourData: weatherViewModel.foreCastData.forecast?.forecastday?.first?.hour ?? [])
                     
-                   
                 }.padding(.horizontal , 20)
             }
         }
