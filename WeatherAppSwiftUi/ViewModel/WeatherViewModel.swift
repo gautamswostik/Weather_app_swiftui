@@ -28,21 +28,25 @@ class WeatherViewModel : ObservableObject {
     
     init() {
         getCurrentLocation()
-        fetchWeatherData(location: "kathmandu")
-        fetchAstronomyData(location: "kathmandu")
-        fetchForcastData(location: "kathmandu")
     }
     
     func getCurrentLocation() {
+        self.loadingCurrentWeather = true
         locationService.requestLocationPermission {location in
             switch (location) {
             case .success(let locationData):
                 DispatchQueue.main.async {
                     self.latitude = "\(locationData.coordinate.latitude)"
                     self.longitude = "\(locationData.coordinate.longitude)"
+                    if(!"\(locationData.coordinate.latitude)".isEmpty){
+                        self.fetchWeatherData(location: "\(locationData.coordinate.latitude),\(locationData.coordinate.longitude)")
+                        self.fetchAstronomyData(location: "\(locationData.coordinate.latitude),\(locationData.coordinate.longitude)")
+                        self.fetchForcastData(location: "\(locationData.coordinate.latitude),\(locationData.coordinate.longitude)")
+                    }
                     
                 }
             case .failure(let error):
+                
                 print("Error getting location: \(error)")
             }
         }

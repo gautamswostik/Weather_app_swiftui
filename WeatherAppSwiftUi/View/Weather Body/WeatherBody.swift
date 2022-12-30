@@ -10,6 +10,7 @@ import SwiftUI
 struct WeatherBody : View {
     //@ObservedObject var weatherViewModel = WeatherViewModel()
     @StateObject var weatherViewModel = WeatherViewModel()
+   
     var body : some View {
         if(weatherViewModel.loadingCurrentWeather) {
             ZStack {
