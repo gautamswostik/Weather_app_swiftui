@@ -15,32 +15,34 @@ struct AstroCardView : View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
                 .shadow(radius: 8)
-            HStack {
-                if(loadingAstrology){
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                }else {
-                    AstroInfo(
-                        title: "Sunrise",
-                        time: sunRiseTime,
-                        icon: "sunrise"
-                    )
+            NavigationLink(destination: SecondScreen()) {
+                HStack {
+                    if(loadingAstrology){
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                    }else {
+                        AstroInfo(
+                            title: "Sunrise",
+                            time: sunRiseTime,
+                            icon: "sunrise"
+                        )
+                        
+                    }
                     
-                }
-                
-                Spacer()
-                if(loadingAstrology){
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                }else {
-                    AstroInfo(
-                        title: "Sunset",
-                        time: sunSetTime,
-                        icon: "sunset"
-                    )
-                }
-            }.padding(.horizontal , 40)
-                .padding(.vertical , 20)
+                    Spacer()
+                    if(loadingAstrology){
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                    }else {
+                        AstroInfo(
+                            title: "Sunset",
+                            time: sunSetTime,
+                            icon: "sunset"
+                        )
+                    }
+                }.padding(.horizontal , 40)
+                    .padding(.vertical , 20)
+            }
         }
     }
 }
